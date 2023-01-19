@@ -1,0 +1,7 @@
+/node_modules
+
+# VSCode settings
+/.vscode
+
+# Secret keys for auth tokens
+.env
