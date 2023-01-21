@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
 // Types
-import type { UserCreationAttributes } from "../types/User";
+import type { UserCreationAttributes, UserAttributes } from "../types/User";
 
 // Models
 import User from "../models/User";
@@ -9,6 +9,10 @@ import User from "../models/User";
 class UsersService {
   async checkIfExists(field: string, value: unknown): Promise<boolean> {
     return !!(await User.findOne({ [field]: value }));
+  }
+
+  async getFirst(attributes: Partial<UserAttributes>) {
+    return await User.findOne(attributes);
   }
 
   async create(payload: UserCreationAttributes) {

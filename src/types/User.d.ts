@@ -17,3 +17,8 @@ export interface UserTokenPayload {
 }
 
 export type UserDocument = MongooseDocument<UserAttributes>;
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}

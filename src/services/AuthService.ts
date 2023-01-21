@@ -1,7 +1,8 @@
 import jwt, { SignOptions } from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 // Types
-import { UserCreationAttributes, UserTokenPayload, UserDocument } from "../types/User";
+import { UserCreationAttributes, UserTokenPayload, UserDocument, LoginCredentials } from "../types/User";
 
 // Configs
 import { development, production } from "../configs/tokenSecrets";
@@ -40,6 +41,22 @@ class AuthService {
     const refreshToken = this.generateToken("refresh", tokenPayload);
     return {
       user,
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async login(credentials: LoginCredentials): Promise<AuthenticationResult | null> {
+    const userHavingEmail = await usersService.getFirst({ email: credentials.email });
+    if (!userHavingEmail) return null;
+    if (!(await bcrypt.compare(credentials.password, userHavingEmail.password))) return null;
+    const tokenPayload = {
+      _id: userHavingEmail._id.toString(),
+    };
+    const accessToken = this.generateToken("access", tokenPayload);
+    const refreshToken = this.generateToken("refresh", tokenPayload);
+    return {
+      user: userHavingEmail,
       accessToken,
       refreshToken,
     };

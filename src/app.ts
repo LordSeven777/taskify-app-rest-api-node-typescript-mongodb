@@ -26,15 +26,20 @@ app.use(express.urlencoded({ extended: false }));
 
 // Index
 app.get("/", (req, res) => {
-  console.log(req.cookies.access_token);
+  console.log(req.cookies);
   res.send(`
     <h1>This is the taskify app's rest api.</h1>
     <p>If you want to access the resources, please point the routes available.</p>
   `);
 });
 
-// User registration route
+/* Authentication related routes ********************************* */
+
 app.post("/api/register", validateRegistrationUser, authController.register);
+
+app.post("/api/login", authController.login);
+
+/* *************************************************************** */
 
 app.use(errorHandlerMiddleware);
 
