@@ -35,6 +35,7 @@ const taskSchema = new Schema<TaskAttributes>(
     ],
     user: {
       type: Schema.Types.ObjectId,
+      required: true,
     },
   },
   {

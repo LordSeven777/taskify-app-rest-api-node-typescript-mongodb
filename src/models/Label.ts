@@ -14,6 +14,10 @@ const labelSchema = new Schema<LabelAttributes>(
       type: String,
       default: "#777777",
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
   },
   {
     toObject: { virtuals: true },

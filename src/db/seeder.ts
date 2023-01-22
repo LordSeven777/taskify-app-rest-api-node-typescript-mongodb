@@ -23,14 +23,17 @@ export async function seedDatabase() {
     {
       name: "Courses",
       color: "green",
+      user: user._id,
     },
     {
       name: "Frontend mentors",
       color: "#ff0000",
+      user: user._id,
     },
     {
       name: "Music",
       color: "#fff",
+      user: user._id,
     },
   ]);
   await Task.insertMany([
