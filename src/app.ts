@@ -45,6 +45,8 @@ app.get("/api/auth-user", authenticate({ fetch: true }), authController.getAuthU
 
 app.delete("/api/logout", authenticate(), authController.logout);
 
+app.delete("/api/unregister", authenticate(), authController.unregister);
+
 /* *************************************************************** */
 
 app.use(errorHandlerMiddleware);

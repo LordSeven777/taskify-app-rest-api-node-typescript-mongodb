@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
 
 // Types
-import type { UserCreationAttributes, LoginCredentials } from "../types/User";
+import type { UserCreationAttributes, LoginCredentials, UserTokenPayload } from "../types/User";
 
 // Response error
 import ResponseError from "../helpers/ResponseError";
 
 // Services
 import authService from "../services/AuthService";
+import usersService from "../services/UsersService";
 
 class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
@@ -49,6 +50,14 @@ class AuthController {
   }
 
   logout(req: Request, res: Response, next: NextFunction) {
+    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
+    res.sendStatus(204);
+  }
+
+  async unregister(req: Request, res: Response, next: NextFunction) {
+    const authUser = res.locals.authUser as UserTokenPayload;
+    await usersService.delete(authUser._id);
     res.clearCookie("access_token");
     res.clearCookie("refresh_token");
     res.sendStatus(204);
