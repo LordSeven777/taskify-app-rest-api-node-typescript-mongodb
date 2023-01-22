@@ -40,7 +40,10 @@ app.post("/api/register", validateRegistrationUser, authController.register);
 
 app.post("/api/login", authController.login);
 
+// Gets the authenticated user from the token
 app.get("/api/auth-user", authenticate({ fetch: true }), authController.getAuthUser);
+
+app.delete("/api/logout", authenticate(), authController.logout);
 
 /* *************************************************************** */
 

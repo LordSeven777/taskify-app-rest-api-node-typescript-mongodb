@@ -47,6 +47,12 @@ class AuthController {
     const authUser = res.locals.authUser;
     res.json(authUser);
   }
+
+  logout(req: Request, res: Response, next: NextFunction) {
+    res.clearCookie("access_token");
+    res.clearCookie("refresh_token");
+    res.sendStatus(204);
+  }
 }
 
 const authController = new AuthController();
