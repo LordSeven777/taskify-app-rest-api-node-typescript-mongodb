@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Model, FilterQuery, Types } from "mongoose";
 
 // Utils
-import { lowerFirstLetter } from "../utils/strings";
+import { lowerFirstLetter, firstLetterIsUpperCase } from "../utils/strings";
 
 // Models
 import User from "../models/User";
@@ -25,6 +25,7 @@ const NOT_FOUND_ERR_MESSAGE = "Could not find the resource specified in the requ
 export function bindParams(bindings?: Record<string, string[]>) {
   return async (req: Request, res: Response, next: NextFunction) => {
     for (const model in req.params) {
+      if (!firstLetterIsUpperCase(model)) continue;
       const value = req.params[model];
       const Model = modelsMap.get(model);
       if (!Model)
