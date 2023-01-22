@@ -22,8 +22,7 @@ interface AuthenticationResult {
 const tokenSecretsConfig = process.env.NODE_ENV ? production : development;
 
 class AuthService {
-  // HELPER
-  private generateToken(type: TokenType, payload: UserTokenPayload): string {
+  generateToken(type: TokenType, payload: UserTokenPayload): string {
     const params: [UserTokenPayload, string, SignOptions | undefined] = [
       payload,
       type === "access" ? tokenSecretsConfig.access : tokenSecretsConfig.refresh,

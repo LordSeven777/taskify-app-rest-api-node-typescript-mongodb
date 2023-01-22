@@ -43,6 +43,8 @@ app.post("/api/login", authController.login);
 // Gets the authenticated user from the token
 app.get("/api/auth-user", authenticate({ fetch: true }), authController.getAuthUser);
 
+app.get("/api/refresh-token", authenticate({ tokenType: "refresh" }), authController.refreshToken);
+
 app.delete("/api/logout", authenticate(), authController.logout);
 
 app.delete("/api/unregister", authenticate(), authController.unregister);

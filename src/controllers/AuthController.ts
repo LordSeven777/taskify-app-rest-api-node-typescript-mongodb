@@ -10,6 +10,12 @@ import ResponseError from "../helpers/ResponseError";
 import authService from "../services/AuthService";
 import usersService from "../services/UsersService";
 
+const tokenCookieOptions: CookieOptions = {
+  secure: true,
+  httpOnly: true,
+  sameSite: "none",
+};
+
 class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
     const payload = req.body as UserCreationAttributes;
@@ -32,11 +38,6 @@ class AuthController {
       return next(new ResponseError(422, "The email address and password must not be empty"));
     const authResult = await authService.login(payload);
     if (!authResult) return next(new ResponseError(422, "The email address or password is wrong"));
-    const tokenCookieOptions: CookieOptions = {
-      secure: true,
-      httpOnly: true,
-      sameSite: "none",
-    };
     res
       .cookie("access_token", authResult.accessToken, tokenCookieOptions)
       .cookie("refresh_token", authResult.refreshToken, tokenCookieOptions)
@@ -45,8 +46,13 @@ class AuthController {
   }
 
   getAuthUser(req: Request, res: Response, next: NextFunction) {
-    const authUser = res.locals.authUser;
-    res.json(authUser);
+    res.json(res.locals.authUser);
+  }
+
+  async refreshToken(req: Request, res: Response, next: NextFunction) {
+    const authUser = res.locals.authUser as UserTokenPayload;
+    const accessToken = authService.generateToken("access", authUser);
+    res.cookie("access_token", accessToken, tokenCookieOptions).json({ accessToken });
   }
 
   logout(req: Request, res: Response, next: NextFunction) {
