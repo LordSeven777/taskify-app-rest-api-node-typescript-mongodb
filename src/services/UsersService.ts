@@ -11,6 +11,10 @@ class UsersService {
     return !!(await User.findOne({ [field]: value }));
   }
 
+  async getOne(id: string) {
+    return await User.findById(id);
+  }
+
   async getFirst(attributes: Partial<UserAttributes>) {
     return await User.findOne(attributes);
   }
