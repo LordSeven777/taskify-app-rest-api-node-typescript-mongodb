@@ -32,6 +32,16 @@ class AuthService {
     return jwt.sign(...params);
   }
 
+  async verifyToken(type: TokenType, token: string) {
+    const secret = type === "access" ? tokenSecretsConfig.access : tokenSecretsConfig.refresh;
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, secret, (err, payload) => {
+        if (err) reject(err);
+        else resolve(payload);
+      });
+    });
+  }
+
   async register(userPayload: UserCreationAttributes): Promise<AuthenticationResult> {
     const user = await usersService.create(userPayload);
     const tokenPayload = {
