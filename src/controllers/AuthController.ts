@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
 
 // Types
-import type { UserCreationAttributes, LoginCredentials, UserTokenPayload } from "../types/User";
+import type { UserCreationAttributes, LoginCredentials, UserTokenPayload } from "@customTypes/User";
 
 // Response error
-import ResponseError from "../helpers/ResponseError";
+import ResponseError from "@helpers/ResponseError";
 
 // Services
-import authService from "../services/AuthService";
-import usersService from "../services/UsersService";
+import authService from "@services/AuthService";
+import usersService from "@services/UsersService";
 
 const tokenCookieOptions: CookieOptions = {
   secure: true,

@@ -1,17 +1,17 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 // Database connection config
-import { development } from "../configs/db";
+import { development } from "@configs/db";
 
 // Database seeding
 import { seedDatabase, clearDatabase } from "./seeder";
 
 interface SetupOptions {
-  seed?: boolean
+  seed?: boolean;
 }
 
 // Suppress mongoose warning
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 
 export default async function setupDatabase(options?: SetupOptions) {
   try {

@@ -1,10 +1,10 @@
 import { checkSchema } from "express-validator";
 
 // Schema
-import userSchema from "../../schemas/user";
+import userSchema from "@schemas/user";
 
 // Express validator wrapper
-import expressValidatorWrapper from "../../helpers/expressValidator";
+import expressValidatorWrapper from "@helpers/expressValidator";
 
 export const validateRegistrationUser = expressValidatorWrapper(
   checkSchema(userSchema),

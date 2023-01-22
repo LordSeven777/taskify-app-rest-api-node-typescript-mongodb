@@ -1,7 +1,7 @@
 // Models
-import User from "../models/User";
-import Task from "../models/Task";
-import Label from "../models/Label";
+import User from "@models/User";
+import Task from "@models/Task";
+import Label from "@models/Label";
 
 function generateDateTime(time: string) {
   const [hour, minutes] = time.split(":") as [string, string];
@@ -22,21 +22,22 @@ export async function seedDatabase() {
   const labels = await Label.insertMany([
     {
       name: "Courses",
-      color: "green"
+      color: "green",
     },
     {
       name: "Frontend mentors",
-      color: "#ff0000"
+      color: "#ff0000",
     },
     {
       name: "Music",
-      color: "#fff"
-    }
+      color: "#fff",
+    },
   ]);
   await Task.insertMany([
     {
       name: "Catch up with my missing courses",
-      description: "I've got to ask for notebooks or lessons pictures of the courses that I have missed so far from my friends to copy.",
+      description:
+        "I've got to ask for notebooks or lessons pictures of the courses that I have missed so far from my friends to copy.",
       startsAt: generateDateTime("06:30"),
       endsAt: generateDateTime("07:30"),
       checkList: ["GAFI", "Intélligence Artificielle", "Algo avancé", "Cryptographie", "Codage"],
@@ -54,15 +55,16 @@ export async function seedDatabase() {
     },
     {
       name: "Learn music fundamentals by playing guitar",
-      description: "Watching tutorials and reading docs about music basics and trying to practice with my guitar",
+      description:
+        "Watching tutorials and reading docs about music basics and trying to practice with my guitar",
       startsAt: generateDateTime("18:00"),
       endsAt: generateDateTime("19:00"),
       labels: [labels[2]._id],
       user: [user._id],
-    }
+    },
   ]);
   console.log("Seeded database ...");
-};
+}
 
 export async function clearDatabase() {
   await Label.deleteMany();

@@ -1,26 +1,26 @@
 import mongoose, { Schema } from "mongoose";
 
 // Label attributes
-import { LabelAttributes } from "../types/Label";
+import { LabelAttributes } from "@customTypes/Label";
 
 const labelSchema = new Schema<LabelAttributes>(
   {
     name: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     color: {
       type: String,
-      default: "#777777"
-    }
+      default: "#777777",
+    },
   },
   {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
-    timestamps: true
-  }
-)
+    timestamps: true,
+  },
+);
 
 // Model
 const Label = mongoose.model("Label", labelSchema);

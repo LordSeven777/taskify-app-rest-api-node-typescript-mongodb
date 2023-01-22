@@ -3,7 +3,7 @@ import path from "path";
 import dotenv from "dotenv";
 
 // Database setup
-import setupDatabase from "./db/setup";
+import setupDatabase from "@db/setup";
 
 // Express REST API application
 import app from "./app";

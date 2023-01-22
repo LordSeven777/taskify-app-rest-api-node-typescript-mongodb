@@ -1,12 +1,12 @@
 import { ErrorRequestHandler } from "express";
 
 // Response error helper
-import ResponseError from "../helpers/ResponseError";
+import ResponseError from "@helpers/ResponseError";
 
 // Type of error response data
 interface ErrorResponseData {
   message: string;
-  payload?: any
+  payload?: any;
 }
 
 // Request error handler
@@ -19,6 +19,6 @@ const errorHandlerMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   }
   console.log(err.message || err);
   next(err);
-}
+};
 
 export default errorHandlerMiddleware;

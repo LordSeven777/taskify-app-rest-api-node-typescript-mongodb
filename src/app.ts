@@ -3,14 +3,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // The error handler
-import errorHandlerMiddleware from "./middlewares/errorHandler";
+import errorHandlerMiddleware from "@middlewares/errorHandler";
 
 // Controllers
-import authController from "./controllers/AuthController";
+import authController from "@controllers/AuthController";
 
 // Middlewares
-import { authenticate } from "./middlewares/authenticate";
-import { validateRegistrationUser } from "./middlewares/validations/user";
+import { authenticate } from "@middlewares/authenticate";
+import { validateRegistrationUser } from "@middlewares/validations/user";
 
 // The express application
 const app = express();

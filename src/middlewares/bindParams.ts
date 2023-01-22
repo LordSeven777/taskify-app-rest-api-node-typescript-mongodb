@@ -2,14 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import { Model, FilterQuery, Types } from "mongoose";
 
 // Utils
-import { lowerFirstLetter, firstLetterIsUpperCase } from "../utils/strings";
+import { lowerFirstLetter, firstLetterIsUpperCase } from "@utils/strings";
 
 // Models
-import User from "../models/User";
-import Task from "../models/Task";
-import Label from "../models/Label";
+import User from "@models/User";
+import Task from "@models/Task";
+import Label from "@models/Label";
 
-import ResponseError from "../helpers/ResponseError";
+import ResponseError from "@helpers/ResponseError";
 
 // Map for the models
 const modelsMap = new Map<string, Model<any>>();

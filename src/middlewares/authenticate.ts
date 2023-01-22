@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 
 // Types
-import type { UserTokenPayload } from "../types/User";
+import type { UserTokenPayload } from "@customTypes/User";
 
 // Response error
-import ResponseError from "../helpers/ResponseError";
+import ResponseError from "@helpers/ResponseError";
 
 // Services
-import authService from "../services/AuthService";
-import usersService from "../services/UsersService";
+import authService from "@services/AuthService";
+import usersService from "@services/UsersService";
 
 interface AuthenticationOptions {
   tokenType?: "access" | "refresh";

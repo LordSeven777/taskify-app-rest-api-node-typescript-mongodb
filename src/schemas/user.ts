@@ -1,7 +1,7 @@
 import { Schema } from "express-validator";
 
 // Users service
-import usersService from "../services/UsersService";
+import usersService from "@services/UsersService";
 
 // Regex for the valid user name
 const validUsernameSchema = /^('?[A-z]+'?\s?)+$/;

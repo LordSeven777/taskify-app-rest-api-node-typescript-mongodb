@@ -1,44 +1,48 @@
 import mongoose, { Schema } from "mongoose";
 
 // Task attributes
-import { TaskAttributes } from "../types/Task";
+import { TaskAttributes } from "@customTypes/Task";
 
 const taskSchema = new Schema<TaskAttributes>(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     description: String,
-    checkList: [{
-      type: String
-    }],
+    checkList: [
+      {
+        type: String,
+      },
+    ],
     startsAt: {
       type: Date,
-      required: true
+      required: true,
     },
     endsAt: {
       type: Date,
-      required: true
+      required: true,
     },
     isCompleted: {
       type: Boolean,
-      default: false
+      default: false,
     },
-    labels: [{
-      type: Schema.Types.ObjectId,
-      default: []
-    }],
+    labels: [
+      {
+        type: Schema.Types.ObjectId,
+        default: [],
+      },
+    ],
     user: {
-      type: Schema.Types.ObjectId
-    }
+      type: Schema.Types.ObjectId,
+    },
   },
   {
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
-    timestamps: true
-  }
-)
+    timestamps: true,
+  },
+);
 
 // Model
 const Task = mongoose.model("Task", taskSchema);

@@ -2,10 +2,15 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 // Types
-import { UserCreationAttributes, UserTokenPayload, UserDocument, LoginCredentials } from "../types/User";
+import type {
+  UserCreationAttributes,
+  UserTokenPayload,
+  UserDocument,
+  LoginCredentials,
+} from "@customTypes/User";
 
 // Configs
-import { development, production } from "../configs/tokenSecrets";
+import { development, production } from "@configs/tokenSecrets";
 
 // Other services
 import usersService from "./UsersService";
