@@ -7,6 +7,7 @@ import errorHandlerMiddleware from "@middlewares/errorHandler";
 
 // Controllers
 import authController from "@controllers/AuthController";
+import usersController from "@controllers/UsersController";
 
 // Middlewares
 import { authenticate } from "@middlewares/authenticate";
@@ -48,6 +49,12 @@ app.get("/api/refresh-token", authenticate({ tokenType: "refresh" }), authContro
 app.delete("/api/logout", authenticate(), authController.logout);
 
 app.delete("/api/unregister", authenticate(), authController.unregister);
+
+/* *************************************************************** */
+
+/* Users routes ************************************************** */
+
+app.get("/api/users/:userId/labels", authenticate(), usersController.getUserLabels);
 
 /* *************************************************************** */
 
