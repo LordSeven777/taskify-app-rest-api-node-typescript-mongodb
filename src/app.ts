@@ -9,6 +9,7 @@ import errorHandlerMiddleware from "./middlewares/errorHandler";
 import authController from "./controllers/AuthController";
 
 // Middlewares
+import { authenticate } from "./middlewares/authenticate";
 import { validateRegistrationUser } from "./middlewares/validations/user";
 
 // The express application
@@ -38,6 +39,8 @@ app.get("/", (req, res) => {
 app.post("/api/register", validateRegistrationUser, authController.register);
 
 app.post("/api/login", authController.login);
+
+app.get("/api/auth-user", authenticate({ fetch: true }), authController.getAuthUser);
 
 /* *************************************************************** */
 

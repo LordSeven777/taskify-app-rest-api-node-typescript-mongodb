@@ -42,6 +42,11 @@ class AuthController {
       .status(201)
       .json(authResult);
   }
+
+  getAuthUser(req: Request, res: Response, next: NextFunction) {
+    const authUser = res.locals.authUser;
+    res.json(authUser);
+  }
 }
 
 const authController = new AuthController();
