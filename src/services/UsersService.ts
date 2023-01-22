@@ -29,6 +29,10 @@ class UsersService {
       password,
     });
   }
+
+  async delete(id: string) {
+    await User.deleteOne({ _id: id });
+  }
 }
 
 const usersService = new UsersService();
