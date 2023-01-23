@@ -21,6 +21,12 @@ class LabelsController {
     const updatedLabel = await labelsService.update(label, labelData);
     return res.json(updatedLabel);
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    const label = res.locals.label as LabelDocument;
+    await labelsService.delete(label._id);
+    res.sendStatus(204);
+  }
 }
 
 const labelsController = new LabelsController();

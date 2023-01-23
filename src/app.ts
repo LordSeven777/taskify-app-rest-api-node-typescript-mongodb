@@ -68,6 +68,8 @@ app.post("/api/labels", authenticate({ fetch: true }), validateLabel, labelsCont
 
 app.put("/api/labels/:Label", belongsToAuthUser, validateUpdateLabel, labelsController.update);
 
+app.delete("/api/labels/:Label", belongsToAuthUser, labelsController.delete);
+
 /* *************************************************************** */
 
 app.use(errorHandlerMiddleware);

@@ -43,6 +43,10 @@ class LabelsService {
     await label.save();
     return label;
   }
+
+  async delete(id: string | Types.ObjectId) {
+    await Label.deleteOne({ _id: id });
+  }
 }
 
 const labelsService = new LabelsService();
