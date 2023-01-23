@@ -3,6 +3,6 @@ export function lowerFirstLetter(word: string): string {
 }
 
 export function firstLetterIsUpperCase(word: string): boolean {
-  const flCharCode = word.charCodeAt(0);
-  return flCharCode >= 97 && flCharCode <= 122;
+  const firstLetter = word.charAt(0);
+  return firstLetter === firstLetter.toUpperCase();
 }
