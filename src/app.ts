@@ -8,10 +8,12 @@ import errorHandlerMiddleware from "@middlewares/errorHandler";
 // Controllers
 import authController from "@controllers/AuthController";
 import usersController from "@controllers/UsersController";
+import labelsController from "@controllers/LabelsController";
 
 // Middlewares
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
+import { validateLabel } from "@middlewares/validations/label";
 
 // The express application
 const app = express();
@@ -54,7 +56,14 @@ app.delete("/api/unregister", authenticate(), authController.unregister);
 
 /* Users routes ************************************************** */
 
+// Gets labels scoped to a user
 app.get("/api/users/:userId/labels", authenticate(), usersController.getUserLabels);
+
+/* *************************************************************** */
+
+/* Labels routes ************************************************* */
+
+app.post("/api/labels", authenticate({ fetch: true }), validateLabel, labelsController.create);
 
 /* *************************************************************** */
 

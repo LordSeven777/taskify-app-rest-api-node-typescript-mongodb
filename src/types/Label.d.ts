@@ -9,3 +9,5 @@ export interface LabelAttributes {
 }
 
 export type LabelDocument = MongooseDocument<LabelAttributes>;
+
+export type LabelCreationAttributes = Omit<LabelAttributes, "_id", "color">;
