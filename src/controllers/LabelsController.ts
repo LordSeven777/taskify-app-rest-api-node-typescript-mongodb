@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 // Types
-import { LabelCreationAttributes } from "@customTypes/Label";
+import { LabelCreationAttributes, LabelDocument } from "@customTypes/Label";
 import { UserDocument } from "@customTypes/User";
 
 // Services
@@ -13,6 +13,13 @@ class LabelsController {
     const labelData = req.body as LabelCreationAttributes;
     const label = await labelsService.create({ ...labelData, user: authUser._id });
     res.status(201).json(label);
+  }
+
+  async update(req: Request, res: Response, next: NextFunction) {
+    const labelData = req.body as LabelCreationAttributes;
+    const label = res.locals.label as LabelDocument;
+    const updatedLabel = await labelsService.update(label, labelData);
+    return res.json(updatedLabel);
   }
 }
 

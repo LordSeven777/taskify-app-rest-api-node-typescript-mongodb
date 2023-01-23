@@ -13,7 +13,8 @@ import labelsController from "@controllers/LabelsController";
 // Middlewares
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
-import { validateLabel } from "@middlewares/validations/label";
+import { validateLabel, validateUpdateLabel } from "@middlewares/validations/label";
+import { belongsToAuthUser } from "@middlewares/authorizations/label";
 
 // The express application
 const app = express();
@@ -64,6 +65,8 @@ app.get("/api/users/:userId/labels", authenticate(), usersController.getUserLabe
 /* Labels routes ************************************************* */
 
 app.post("/api/labels", authenticate({ fetch: true }), validateLabel, labelsController.create);
+
+app.put("/api/labels/:Label", belongsToAuthUser, validateUpdateLabel, labelsController.update);
 
 /* *************************************************************** */
 

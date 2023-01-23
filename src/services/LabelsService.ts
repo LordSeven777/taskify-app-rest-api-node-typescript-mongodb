@@ -36,6 +36,13 @@ class LabelsService {
     if (data.color) payload.color = data.color;
     return await Label.create(payload);
   }
+
+  async update(label: LabelDocument, data: LabelCreationAttributes) {
+    label.name = data.name;
+    if (data.color) label.color = data.color;
+    await label.save();
+    return label;
+  }
 }
 
 const labelsService = new LabelsService();
