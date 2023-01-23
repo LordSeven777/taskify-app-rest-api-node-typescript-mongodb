@@ -10,7 +10,7 @@ import ResponseError from "@helpers/ResponseError";
 import { authenticate } from "@middlewares/authenticate";
 import { bindParams } from "@middlewares/bindParams";
 
-export const belongsToAuthUser = [
+export const ownsLabel = [
   authenticate({ fetch: true }),
   bindParams(),
   (req: Request, res: Response, next: NextFunction) => {

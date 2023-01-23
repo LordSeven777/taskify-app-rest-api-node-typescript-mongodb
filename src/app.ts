@@ -14,7 +14,7 @@ import labelsController from "@controllers/LabelsController";
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
 import { validateLabel, validateUpdateLabel } from "@middlewares/validations/label";
-import { belongsToAuthUser } from "@middlewares/authorizations/label";
+import { ownsLabel } from "@middlewares/authorizations/label";
 
 // The express application
 const app = express();
@@ -66,9 +66,9 @@ app.get("/api/users/:userId/labels", authenticate(), usersController.getUserLabe
 
 app.post("/api/labels", authenticate({ fetch: true }), validateLabel, labelsController.create);
 
-app.put("/api/labels/:Label", belongsToAuthUser, validateUpdateLabel, labelsController.update);
+app.put("/api/labels/:Label", ownsLabel, validateUpdateLabel, labelsController.update);
 
-app.delete("/api/labels/:Label", belongsToAuthUser, labelsController.delete);
+app.delete("/api/labels/:Label", ownsLabel, labelsController.delete);
 
 /* *************************************************************** */
 
