@@ -28,3 +28,18 @@ export const validateUpdateTask = expressValidatorWrapper(
   checkSchema(updateTaskSchema),
   "Wrong values in the task data",
 );
+
+const updateIsCompletedSchema: Schema = {
+  isCompleted: {
+    ...taskSchema.isCompleted,
+    optional: undefined,
+    notEmpty: {
+      errorMessage: "The isCompleted field must not be empty",
+    },
+  },
+};
+
+export const validateUpdateTaskIsCompleted = expressValidatorWrapper(
+  checkSchema(updateIsCompletedSchema),
+  "Wrong values in the task completion status data",
+);

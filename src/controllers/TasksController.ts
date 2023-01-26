@@ -31,6 +31,17 @@ class TasksController {
     }
   }
 
+  async updateIsCompleted(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task = res.locals.task as TaskDocument;
+      task.isCompleted = req.body.isCompleted as boolean;
+      await task.save();
+      res.json({ isCompleted: req.body.isCompleted });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const task = res.locals.task as TaskDocument;

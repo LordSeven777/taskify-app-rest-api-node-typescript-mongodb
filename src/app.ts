@@ -15,7 +15,11 @@ import tasksController from "@controllers/TasksController";
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
 import { validateLabel, validateUpdateLabel } from "@middlewares/validations/label";
-import { validateTask, validateUpdateTask } from "@middlewares/validations/task";
+import {
+  validateTask,
+  validateUpdateTask,
+  validateUpdateTaskIsCompleted,
+} from "@middlewares/validations/task";
 import { ownsLabel } from "@middlewares/authorizations/label";
 import { ownsTask } from "@middlewares/authorizations/task";
 import { matchesUserParam } from "@middlewares/authorizations/user";
@@ -84,6 +88,14 @@ app.delete("/api/labels/:Label", ownsLabel, labelsController.delete);
 app.post("/api/tasks", authenticate({ fetch: true }), validateTask, tasksController.create);
 
 app.put("/api/tasks/:Task", ownsTask, validateUpdateTask, tasksController.update);
+
+// Updates a task's completion status
+app.patch(
+  "/api/tasks/:Task/isCompleted",
+  ownsTask,
+  validateUpdateTaskIsCompleted,
+  tasksController.updateIsCompleted,
+);
 
 app.delete("/api/tasks/:Task", ownsTask, tasksController.delete);
 
