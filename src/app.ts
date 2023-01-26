@@ -9,11 +9,13 @@ import errorHandlerMiddleware from "@middlewares/errorHandler";
 import authController from "@controllers/AuthController";
 import usersController from "@controllers/UsersController";
 import labelsController from "@controllers/LabelsController";
+import tasksController from "@controllers/TasksController";
 
 // Middlewares
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
 import { validateLabel, validateUpdateLabel } from "@middlewares/validations/label";
+import { validateTask } from "@middlewares/validations/task";
 import { ownsLabel } from "@middlewares/authorizations/label";
 import { matchesUserParam } from "@middlewares/authorizations/user";
 
@@ -73,6 +75,12 @@ app.post("/api/labels", authenticate({ fetch: true }), validateLabel, labelsCont
 app.put("/api/labels/:Label", ownsLabel, validateUpdateLabel, labelsController.update);
 
 app.delete("/api/labels/:Label", ownsLabel, labelsController.delete);
+
+/* *************************************************************** */
+
+/* Tasks routes ************************************************** */
+
+app.post("/api/tasks", authenticate({ fetch: true }), validateTask, tasksController.create);
 
 /* *************************************************************** */
 

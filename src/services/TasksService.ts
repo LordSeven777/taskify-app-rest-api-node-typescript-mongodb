@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 
 // Types
 import { LabelDocument } from "@customTypes/Label";
+import { TaskCreationAttributes } from "@customTypes/Task";
 
 // Utils
 import { getDateEdgeTimes } from "@utils/dates";
@@ -43,6 +44,21 @@ class TasksService {
       .select("-description -checkList")
       .populate<{ labels: LabelDocument[] }>("labels");
     return tasks;
+  }
+
+  async create(data: TaskCreationAttributes) {
+    const payload: TaskCreationAttributes = {
+      name: data.name,
+      startsAt: data.startsAt,
+      endsAt: data.endsAt,
+      user: data.user,
+    };
+    if (data.checkList) payload.checkList = data.checkList;
+    if (data.description) payload.description = data.description;
+    if (data.isCompleted) payload.isCompleted = data.isCompleted;
+    if (data.labels) payload.labels = data.labels;
+    const task = await Task.create(payload);
+    return await task.populate<{ labels: LabelDocument[] }>("labels");
   }
 }
 
