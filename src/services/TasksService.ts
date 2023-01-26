@@ -52,11 +52,11 @@ class TasksService {
       startsAt: data.startsAt,
       endsAt: data.endsAt,
       user: data.user,
+      checkList: data.checkList,
+      description: data.description,
+      isCompleted: data.isCompleted,
+      labels: data.labels,
     };
-    if (data.checkList) payload.checkList = data.checkList;
-    if (data.description) payload.description = data.description;
-    if (data.isCompleted) payload.isCompleted = data.isCompleted;
-    if (data.labels) payload.labels = data.labels;
     const task = await Task.create(payload);
     return await task.populate<{ labels: LabelDocument[] }>("labels");
   }
