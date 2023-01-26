@@ -15,6 +15,7 @@ import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
 import { validateLabel, validateUpdateLabel } from "@middlewares/validations/label";
 import { ownsLabel } from "@middlewares/authorizations/label";
+import { matchesUserParam } from "@middlewares/authorizations/user";
 
 // The express application
 const app = express();
@@ -58,7 +59,10 @@ app.delete("/api/unregister", authenticate(), authController.unregister);
 /* Users routes ************************************************** */
 
 // Gets labels scoped to a user
-app.get("/api/users/:userId/labels", authenticate(), usersController.getUserLabels);
+app.get("/api/users/:userId/labels", matchesUserParam, usersController.getUserLabels);
+
+// Gets a users's tasks
+app.get("/api/users/:userId/tasks", matchesUserParam, usersController.getUserTasks);
 
 /* *************************************************************** */
 

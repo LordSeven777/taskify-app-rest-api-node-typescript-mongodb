@@ -1,26 +1,33 @@
-import { Request, Response, NextFunction, CookieOptions } from "express";
-
-// Types
-import { UserTokenPayload } from "@customTypes/User";
-
-// Response error
-import ResponseError from "@helpers/ResponseError";
+import { Request, Response, NextFunction } from "express";
 
 // Services
 import labelsService from "@services/LabelsService";
+import tasksService from "@services/TasksService";
 
 class UsersController {
   async getUserLabels(req: Request, res: Response, next: NextFunction) {
-    const authUser = res.locals.authUser as UserTokenPayload;
-    const { userId } = req.params;
-    if (authUser._id !== userId) {
-      return next(new ResponseError(403, "Your are not the allowed to access this route"));
+    try {
+      const labels = await labelsService.getUserLabels({
+        search: req.query.q as string | undefined,
+        userId: req.params.userId,
+      });
+      res.json(labels);
+    } catch (error) {
+      next(error);
     }
-    const labels = await labelsService.getUserLabels({
-      search: req.query.q as string | undefined,
-      userId,
-    });
-    res.json(labels);
+  }
+
+  async getUserTasks(req: Request, res: Response, next: NextFunction) {
+    try {
+      const tasks = await tasksService.getUserTasks({
+        date: req.query.date as string,
+        sort: req.query.sort as string,
+        userId: req.params.userId,
+      });
+      res.json(tasks);
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
