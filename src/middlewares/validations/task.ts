@@ -1,4 +1,4 @@
-import { checkSchema } from "express-validator";
+import { checkSchema, Schema } from "express-validator";
 
 // Schema
 import taskSchema from "@schemas/task";
@@ -7,3 +7,24 @@ import taskSchema from "@schemas/task";
 import expressValidatorWrapper from "@helpers/expressValidator";
 
 export const validateTask = expressValidatorWrapper(checkSchema(taskSchema), "Wrong values in the task data");
+
+const updateTaskSchema: Schema = {
+  ...taskSchema,
+  checkList: {
+    ...taskSchema.checkList,
+    optional: undefined,
+  },
+  isCompleted: {
+    ...taskSchema.isCompleted,
+    optional: undefined,
+  },
+  labels: {
+    ...taskSchema.labels,
+    optional: undefined,
+  },
+};
+
+export const validateUpdateTask = expressValidatorWrapper(
+  checkSchema(updateTaskSchema),
+  "Wrong values in the task data",
+);
