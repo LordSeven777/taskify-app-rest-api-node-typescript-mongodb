@@ -85,6 +85,8 @@ app.post("/api/tasks", authenticate({ fetch: true }), validateTask, tasksControl
 
 app.put("/api/tasks/:Task", ownsTask, validateUpdateTask, tasksController.update);
 
+app.delete("/api/tasks/:Task", ownsTask, tasksController.delete);
+
 /* *************************************************************** */
 
 app.use(errorHandlerMiddleware);

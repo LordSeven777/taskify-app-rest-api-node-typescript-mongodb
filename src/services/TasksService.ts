@@ -72,6 +72,10 @@ class TasksService {
     await task.save();
     return await task.populate<{ labels: LabelDocument[] }>("labels");
   }
+
+  async delete(id: Types.ObjectId | string) {
+    await Task.deleteOne({ _id: id });
+  }
 }
 
 const tasksService = new TasksService();

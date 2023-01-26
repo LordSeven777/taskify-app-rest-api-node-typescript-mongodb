@@ -30,6 +30,16 @@ class TasksController {
       next(error);
     }
   }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task = res.locals.task as TaskDocument;
+      await tasksService.delete(task._id);
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const tasksController = new TasksController();
