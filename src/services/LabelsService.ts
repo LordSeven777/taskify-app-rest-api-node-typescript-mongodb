@@ -47,6 +47,15 @@ class LabelsService {
   async delete(id: string | Types.ObjectId) {
     await Label.deleteOne({ _id: id });
   }
+
+  async idsExist(ids: (string | Types.ObjectId)[]) {
+    const count = await Label.countDocuments({
+      _id: {
+        $in: [...new Set(ids)],
+      },
+    });
+    return count === ids.length;
+  }
 }
 
 const labelsService = new LabelsService();
