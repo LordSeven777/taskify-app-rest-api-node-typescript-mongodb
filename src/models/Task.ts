@@ -13,6 +13,7 @@ const taskSchema = new Schema<TaskAttributes>(
     checkList: [
       {
         type: String,
+        default: [],
       },
     ],
     startsAt: {
