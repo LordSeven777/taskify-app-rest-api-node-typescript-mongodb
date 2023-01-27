@@ -28,7 +28,12 @@ import { matchesUserParam } from "@middlewares/authorizations/user";
 const app = express();
 
 // CORS handling
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    optionsSuccessStatus: 200,
+  }),
+);
 
 // Cookie parser
 app.use(cookieParser());
