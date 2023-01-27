@@ -1,5 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 
 // Types
 import type {
@@ -21,6 +22,7 @@ interface AuthenticationResult {
   user: UserDocument;
   accessToken: string;
   refreshToken: string;
+  csrfToken: string;
 }
 
 // The token secrets config
@@ -57,6 +59,7 @@ class AuthService {
       user,
       accessToken,
       refreshToken,
+      csrfToken: uuidv4(),
     };
   }
 
@@ -73,6 +76,7 @@ class AuthService {
       user: userHavingEmail,
       accessToken,
       refreshToken,
+      csrfToken: uuidv4(),
     };
   }
 }

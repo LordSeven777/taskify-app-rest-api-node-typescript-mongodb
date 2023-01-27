@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
+import { v4 as uuidv4 } from "uuid";
 
 // Types
 import type { UserCreationAttributes, LoginCredentials, UserTokenPayload } from "@customTypes/User";
@@ -11,7 +12,7 @@ import authService from "@services/AuthService";
 import usersService from "@services/UsersService";
 
 const tokenCookieOptions: CookieOptions = {
-  secure: true,
+  secure: !!process.env.NODE_ENV,
   httpOnly: true,
   sameSite: "none",
 };
@@ -29,6 +30,7 @@ class AuthController {
       res
         .cookie("access_token", authResult.accessToken, tokenCookieOptions)
         .cookie("refresh_token", authResult.refreshToken, tokenCookieOptions)
+        .cookie("csrf_token", authResult.csrfToken, tokenCookieOptions)
         .status(201)
         .json(authResult);
     } catch (error) {
@@ -46,6 +48,7 @@ class AuthController {
       res
         .cookie("access_token", authResult.accessToken, tokenCookieOptions)
         .cookie("refresh_token", authResult.refreshToken, tokenCookieOptions)
+        .cookie("csrf_token", authResult.csrfToken, tokenCookieOptions)
         .status(201)
         .json(authResult);
     } catch (error) {
@@ -54,7 +57,11 @@ class AuthController {
   }
 
   getAuthUser(req: Request, res: Response, next: NextFunction) {
-    res.json(res.locals.authUser);
+    const csrfToken = uuidv4();
+    res.cookie("csrf_token", csrfToken, tokenCookieOptions).json({
+      user: res.locals.authUser,
+      csrfToken,
+    });
   }
 
   async refreshToken(req: Request, res: Response, next: NextFunction) {
@@ -66,6 +73,7 @@ class AuthController {
   logout(req: Request, res: Response, next: NextFunction) {
     res.clearCookie("access_token");
     res.clearCookie("refresh_token");
+    res.clearCookie("csrf_token");
     res.sendStatus(204);
   }
 
@@ -75,6 +83,7 @@ class AuthController {
       await usersService.delete(authUser._id);
       res.clearCookie("access_token");
       res.clearCookie("refresh_token");
+      res.clearCookie("csrf_token");
       res.sendStatus(204);
     } catch (error) {
       next(error);

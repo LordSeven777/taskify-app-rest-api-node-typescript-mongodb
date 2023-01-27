@@ -12,6 +12,7 @@ import labelsController from "@controllers/LabelsController";
 import tasksController from "@controllers/TasksController";
 
 // Middlewares
+import { csrfProtection } from "@middlewares/csrf";
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
 import { validateLabel, validateUpdateLabel } from "@middlewares/validations/label";
@@ -37,6 +38,9 @@ app.use(
 
 // Cookie parser
 app.use(cookieParser());
+
+// CSRF protection
+app.use(csrfProtection);
 
 // Body parser
 app.use(express.json());
