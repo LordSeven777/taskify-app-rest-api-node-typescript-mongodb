@@ -2,7 +2,12 @@ import { Request, Response, NextFunction, CookieOptions } from "express";
 import { v4 as uuidv4 } from "uuid";
 
 // Types
-import type { UserCreationAttributes, LoginCredentials, UserTokenPayload } from "@customTypes/User";
+import type {
+  UserCreationAttributes,
+  LoginCredentials,
+  UserTokenPayload,
+  UserDocument,
+} from "@customTypes/User";
 
 // Response error
 import ResponseError from "@helpers/ResponseError";
@@ -57,10 +62,12 @@ class AuthController {
   }
 
   getAuthUser(req: Request, res: Response, next: NextFunction) {
+    const authUser = res.locals.authUser as UserDocument;
     const csrfToken = uuidv4();
     res.cookie("csrf_token", csrfToken, tokenCookieOptions).json({
       user: res.locals.authUser,
       csrfToken,
+      accessToken: authService.generateToken("access", { _id: authUser._id.toString() }),
     });
   }
 
