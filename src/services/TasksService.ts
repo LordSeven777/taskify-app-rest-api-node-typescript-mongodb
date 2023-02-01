@@ -22,22 +22,12 @@ class TasksService {
     const date = options.date || new Date().toISOString();
     const [dateStart, dateEnd] = getDateEdgeTimes(date);
     const tasks = await Task.find({
-      $or: [
-        {
-          startsAt: {
-            $gt: dateStart,
-            $lte: dateEnd,
-          },
-        },
-        {
-          startsAt: {
-            $lt: dateStart,
-          },
-          endsAt: {
-            $gte: dateStart,
-          },
-        },
-      ],
+      startsAt: {
+        $lte: dateEnd,
+      },
+      endsAt: {
+        $gte: dateStart,
+      },
       user: options.userId,
     })
       .sort(sort)
