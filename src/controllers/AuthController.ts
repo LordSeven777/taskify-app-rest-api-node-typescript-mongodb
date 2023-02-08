@@ -63,7 +63,7 @@ class AuthController {
 
   getAuthUser(req: Request, res: Response, next: NextFunction) {
     const authUser = res.locals.authUser as UserDocument;
-    const csrfToken = uuidv4();
+    const csrfToken = req.cookies.csrf_token || uuidv4();
     res.cookie("csrf_token", csrfToken, tokenCookieOptions).json({
       user: res.locals.authUser,
       csrfToken,

@@ -38,7 +38,7 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL,
     optionsSuccessStatus: 200,
-    credentials: true
+    credentials: true,
   }),
 );
 
@@ -68,7 +68,7 @@ app.post("/api/register", validateRegistrationUser, authController.register);
 app.post("/api/login", authController.login);
 
 // Gets the authenticated user from the token
-app.get("/api/auth-user", authenticate({ fetch: true }), authController.getAuthUser);
+app.get("/api/token-auth", authenticate({ tokenType: "refresh", fetch: true }), authController.getAuthUser);
 
 app.get("/api/refresh-token", authenticate({ tokenType: "refresh" }), authController.refreshToken);
 
