@@ -1,6 +1,8 @@
+import path from "path";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import * as dotenv from "dotenv";
 
 // The error handler
 import errorHandlerMiddleware from "@middlewares/errorHandler";
@@ -25,6 +27,9 @@ import { ownsLabel } from "@middlewares/authorizations/label";
 import { ownsTask } from "@middlewares/authorizations/task";
 import { matchesUserParam } from "@middlewares/authorizations/user";
 
+// Loading environment variables (only for local development)
+dotenv.config({ path: path.resolve(__dirname, "../", ".env") });
+
 // The express application
 const app = express();
 
@@ -33,6 +38,7 @@ app.use(
   cors({
     origin: process.env.CLIENT_URL,
     optionsSuccessStatus: 200,
+    credentials: true
   }),
 );
 
