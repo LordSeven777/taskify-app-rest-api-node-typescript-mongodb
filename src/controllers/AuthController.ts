@@ -17,9 +17,9 @@ import authService from "@services/AuthService";
 import usersService from "@services/UsersService";
 
 const tokenCookieOptions: CookieOptions = {
-  secure: !!process.env.NODE_ENV,
-  httpOnly: true,
   sameSite: "none",
+  secure: true,
+  httpOnly: true
 };
 
 class AuthController {
@@ -27,11 +27,6 @@ class AuthController {
     try {
       const payload = req.body as UserCreationAttributes;
       const authResult = await authService.register(payload);
-      const tokenCookieOptions: CookieOptions = {
-        secure: true,
-        httpOnly: true,
-        sameSite: "none",
-      };
       res
         .cookie("access_token", authResult.accessToken, tokenCookieOptions)
         .cookie("refresh_token", authResult.refreshToken, tokenCookieOptions)

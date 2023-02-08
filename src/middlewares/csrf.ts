@@ -3,12 +3,13 @@ import { Request, Response, NextFunction } from "express";
 import ResponseError from "@helpers/ResponseError";
 
 // Request paths excluded from CSRF protection
-const EXCLUDED_PATHS = ["/api/login", "/api/register"];
+const EXCLUDED_PATHS = ["/api/login", "/api/register", "/api/token-auth"];
 
 // HTTP methods subject to CSRF protection
 const PROTECTED_METHODS = ["POST", "PUT", "PATCH", "DELETE"];
 
 export function csrfProtection(req: Request, res: Response, next: NextFunction) {
+  if (!req.cookies.access_token && !req.cookies.refresh_token) return next();
   if (EXCLUDED_PATHS.includes(req.path)) return next();
   if (!PROTECTED_METHODS.includes(req.method)) return next();
   if (!req.cookies.csrf_token) {

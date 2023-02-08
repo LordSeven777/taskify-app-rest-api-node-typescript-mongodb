@@ -45,12 +45,12 @@ app.use(
 // Cookie parser
 app.use(cookieParser());
 
-// CSRF protection
-app.use(csrfProtection);
-
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// CSRF protection
+app.use(csrfProtection);
 
 // Index
 app.get("/", (req, res) => {
@@ -68,7 +68,7 @@ app.post("/api/register", validateRegistrationUser, authController.register);
 app.post("/api/login", authController.login);
 
 // Gets the authenticated user from the token
-app.get("/api/token-auth", authenticate({ tokenType: "refresh", fetch: true }), authController.getAuthUser);
+app.post("/api/token-auth", authenticate({ tokenType: "refresh", fetch: true }), authController.getAuthUser);
 
 app.get("/api/refresh-token", authenticate({ tokenType: "refresh" }), authController.refreshToken);
 
