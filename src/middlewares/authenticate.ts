@@ -26,7 +26,6 @@ export function authenticate(options?: AuthenticationOptions) {
     const cookieToken: string | undefined =
       tokenType === "access" ? req.cookies.access_token : req.cookies.refresh_token;
     let token = bearerToken || cookieToken;
-    console.log(cookieToken)
     if (!token && required) {
       return next(new ResponseError(401, `You are unauthenticated`));
     }
