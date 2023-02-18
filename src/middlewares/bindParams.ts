@@ -17,7 +17,7 @@ modelsMap.set("User", User);
 modelsMap.set("Task", Task);
 modelsMap.set("Label", Label);
 
-const DEFAULT_FIELD = "id";
+const DEFAULT_FIELD = "_id";
 const NOT_FOUND_ERR_MESSAGE = "Could not find the resource specified in the request parameters";
 
 // Binds the request params to the corresponding models
@@ -32,7 +32,7 @@ export function bindParams(bindings?: Record<string, string[]>) {
         return next(new ResponseError(500, `The ${model} model in the request parameters is not defined`));
       const fields: string[] = bindings && bindings[model] ? bindings[model] : [DEFAULT_FIELD];
       let query: FilterQuery<any>;
-      if (fields.length === 0) {
+      if (fields.length === 1) {
         const field = fields[0];
         if (field === "_id" && !Types.ObjectId.isValid(value)) {
           return next(new ResponseError(404, NOT_FOUND_ERR_MESSAGE));
