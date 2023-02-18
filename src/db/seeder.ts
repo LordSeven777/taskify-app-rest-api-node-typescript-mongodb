@@ -22,7 +22,7 @@ export async function seedDatabase() {
   const labels = await Label.insertMany([
     {
       name: "Courses",
-      color: "green",
+      color: "#00ff00",
       user: user._id,
     },
     {
@@ -32,7 +32,7 @@ export async function seedDatabase() {
     },
     {
       name: "Music",
-      color: "#fff",
+      color: "#1c1c1c",
       user: user._id,
     },
   ]);
