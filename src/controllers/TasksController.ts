@@ -8,6 +8,16 @@ import { TaskDocument } from "@customTypes/Task";
 import tasksService from "@services/TasksService";
 
 class TasksController {
+  async getOne(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task = res.locals.task as TaskDocument;
+      await task.populate<{ user: UserDocument }>("user");
+      res.json(task);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const authUser = res.locals.authUser as UserDocument;

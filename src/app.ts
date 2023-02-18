@@ -4,9 +4,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
 
-// The error handler
-import errorHandlerMiddleware from "@middlewares/errorHandler";
-
 // Controllers
 import authController from "@controllers/AuthController";
 import usersController from "@controllers/UsersController";
@@ -14,6 +11,7 @@ import labelsController from "@controllers/LabelsController";
 import tasksController from "@controllers/TasksController";
 
 // Middlewares
+import errorHandlerMiddleware from "@middlewares/errorHandler";
 import { csrfProtection } from "@middlewares/csrf";
 import { authenticate } from "@middlewares/authenticate";
 import { validateRegistrationUser } from "@middlewares/validations/user";
@@ -54,7 +52,6 @@ app.use(csrfProtection);
 
 // Index
 app.get("/", (req, res) => {
-  console.log(req.cookies);
   res.send(`
     <h1>This is the taskify app's rest api.</h1>
     <p>If you want to access the resources, please point the routes available.</p>
@@ -100,6 +97,8 @@ app.delete("/api/labels/:Label", ownsLabel, labelsController.delete);
 
 /* Tasks routes ************************************************** */
 
+app.get("/api/tasks/:Task", ownsTask, tasksController.getOne);
+
 app.post("/api/tasks", authenticate({ fetch: true }), validateTask, tasksController.create);
 
 app.put("/api/tasks/:Task", ownsTask, validateUpdateTask, tasksController.update);
@@ -116,6 +115,7 @@ app.delete("/api/tasks/:Task", ownsTask, tasksController.delete);
 
 /* *************************************************************** */
 
+// Error handling
 app.use(errorHandlerMiddleware);
 
 export default app;
