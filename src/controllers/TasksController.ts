@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 // Types
 import { UserDocument } from "@customTypes/User";
 import { TaskDocument } from "@customTypes/Task";
+import { LabelDocument } from "@customTypes/Label";
 
 // Services
 import tasksService from "@services/TasksService";
@@ -11,7 +12,7 @@ class TasksController {
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const task = res.locals.task as TaskDocument;
-      await task.populate<{ user: UserDocument }>("user");
+      await task.populate<{ user: UserDocument; labels: LabelDocument[] }>(["user", "labels"]);
       res.json(task);
     } catch (error) {
       next(error);
