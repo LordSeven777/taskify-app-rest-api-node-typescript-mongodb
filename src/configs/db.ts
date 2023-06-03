@@ -13,5 +13,8 @@ export const development: DatabaseConnectionConfig = {
 
 export const production: DatabaseConnectionConfig = {
   uri: process.env.DATABASE_URL as string,
-  options: {},
+  options: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
 };
