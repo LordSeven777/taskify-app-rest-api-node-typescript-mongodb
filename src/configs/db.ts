@@ -13,7 +13,5 @@ export const development: DatabaseConnectionConfig = {
 
 export const production: DatabaseConnectionConfig = {
   uri: process.env.DATABASE_URL as string,
-  options: {
-    useUnifiedTopology: true,
-  },
+  options: {},
 };
