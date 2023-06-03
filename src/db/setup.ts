@@ -20,6 +20,7 @@ export default async function setupDatabase(options?: SetupOptions) {
     console.log("Connected to the database ...");
   } catch (error) {
     console.log("Failed to connect to the database ...", (error as Error).message);
+    console.log(error);
     return;
   }
   if (options?.seed) {
