@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Database connection config
-import { development } from "@configs/db";
+import { development, production } from "@configs/db";
 
 // Database seeding
 import { seedDatabase, clearDatabase } from "./seeder";
@@ -15,7 +15,8 @@ mongoose.set("strictQuery", true);
 
 export default async function setupDatabase(options?: SetupOptions) {
   try {
-    const connectionConfig = development;
+    const NODE_ENV = process.env.NODE_ENV as (string | undefined);
+    const connectionConfig = (!NODE_ENV || NODE_ENV === "DEVELOPMENT") ? development : production;
     await mongoose.connect(connectionConfig.uri, connectionConfig.options);
     console.log("Connected to the database ...");
   } catch (error) {
